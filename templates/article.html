@@ -23,7 +23,7 @@
             {% endfor %}
     </span>
 
-    <div class="commentstitle"><span class="trackback"><a href="http://www.baidu.org/wp-trackback.php?p=542" rel="trackback" title="Trackback URI"></a></span><h3 id="comments"><span class="commentsnumber">only 1 comment</span> untill now</h3></div>
+    <div class="commentstitle"><span class="trackback"><a href="http://www.baidu.org/wp-trackback.php?p=542" rel="trackback" title="Trackback URI"></a></span><h3 id="comments"><span class="commentsnumber"> {{ comment_list|length }} comment</span> untill now</h3></div>
 
     <ol class="commentlist">
         {% for comment in comment_list %}

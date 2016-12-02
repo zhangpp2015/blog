@@ -21,18 +21,8 @@
 <body>
 <header>
   <div class="logo">
-      <h1>{{ SITE_NAME }}</h1>
-      <p>{{ SITE_DESC }}</p>
+      <img src="/static/images/head.png" style="margin-left: -50px;">
   </div>
-  <nav id="topnav" class="f_r">
-    <ul>
-        <a href="http://localhost:8000">首页</a>
-        {% for category in category_list %}
-      <a href="{% url 'category' %}?category={{ category.id }}">{{ category.name }}</a>
-        {% endfor %}
-    </ul>
-    <script src="js/nav.js"></script>
-  </nav>
 </header>
 <article>
   <div class="l_box f_l">
@@ -138,7 +128,7 @@ window.onload = function ()
   <!--r_box end -->
 </article>
 <footer>
-  <p class="ft-copyright">某某某的个人博客 蜀ICP备xxxxxxx号-1</p>
+  <p class="ft-copyright">朋朋的个人博客</p>
   <div id="tbox"> <a id="togbook" href="/"></a> <a id="gotop" href="javascript:void(0)"></a> </div>
 </footer>
 </body>
