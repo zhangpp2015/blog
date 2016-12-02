@@ -1,0 +1,6 @@
+*.log
+.sass-cache
+/uploads
+/.idea
+*.pyc
+*.rdb
