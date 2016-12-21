@@ -39,7 +39,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'pagination',
     'debug_toolbar',
+
 )
 
 MIDDLEWARE = [
@@ -56,6 +58,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pagination.middleware.PaginationMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
@@ -127,7 +130,9 @@ STATICFILES_DIRS = (
     ("images", os.path.join(STATIC_ROOT, 'images').replace('\\', '/')),
     ("css",    os.path.join(STATIC_ROOT, 'css').replace('\\', '/')),
     ("js",     os.path.join(STATIC_ROOT, 'js').replace('\\', '/')),
+    ("layout",     os.path.join(STATIC_ROOT, 'layout').replace('\\', '/')),
 )
+
 
 MEDIA_URL = '/uploads/'
 

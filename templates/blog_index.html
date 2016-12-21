@@ -1,0 +1,48 @@
+{% extends 'blog_base.html' %}
+{% block blog_left_content %}
+<div class="main_content">
+<div class="block_breadcrumbs">
+        <div class="text"><p>You are here:</p></div>
+
+        <ul>
+            <li><a href="">Home</a></li>
+        </ul>
+    </div>
+    <div class="separator" style="height:30px;"></div>
+
+    <p class="general_subtitle">Eestablished fact that a reader will be distracted by the readable content of a page when looking at its layout are many variations of passages have suffered alteration.</p>
+
+    <div class="line_4" style="margin:0px 0px 0px;"></div>
+
+    <div class="block_blog_1">
+        {% for article in article_list %}
+        <article class="blog_post">
+            <h4 class="title"><a href="blog_post.html">{{ article.title }}</a></h4>
+            <div class="info">
+                <div class="date"><p>{{ article.date_publish | date:'d-M-y' }}</p></div>
+                <div class="author"><p>By: <a href="#">{{ article.user }}</a></p></div>
+
+                <div class="r_part">
+                    <div class="category">
+                        <p class="text">Category:</p>
+                        <ul>
+                            <li><a href="#">{{ article.category }}</a></li>
+                        </ul>
+                    </div>
+
+                    <a href="#" class="views">{{ article.click_count }}</a>
+                    <a href="#" class="comments">{{ article.comment_set.all.count }}</a>
+                </div>
+            </div>
+
+            <div class="content">
+                <p>{{ article.desc }}</p>
+            </div>
+
+        </article>
+        {% endfor %}
+        </div>
+        {% include 'pagination.html' %}
+    </div>
+</div>
+{% endblock %}

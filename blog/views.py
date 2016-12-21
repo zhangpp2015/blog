@@ -64,7 +64,7 @@ def index(request):
 
     except Exception as e:
         pass
-    return render(request, 'index.html', locals())
+    return render(request, 'blog_index.html', locals())
 
 def archive(request):
     try:
@@ -99,7 +99,7 @@ def category(request):
 
 #分页代码
 def getPage(request, article_list):
-    paginator = Paginator(article_list, 4)
+    paginator = Paginator(article_list, 5)
     try:
         page = int(request.GET.get('page', 1))
         article_list = paginator.page(page)
