@@ -1950,7 +1950,7 @@ nav.secondary_menu > ul > li:first-child > a {padding-left:0px;}
 .block_popular_stuff {}
 .block_popular_stuff h4 {padding-bottom:18px;}
 .block_popular_stuff .line_2 {margin-top:22px;}
-.block_popular_stuff .content {width:246px; padding-right:13px; float:left; position:relative; border-right:1px solid #f5f5f5;}
+.block_popular_stuff .content {width:500px; padding-right:13px; float:left; position:relative; border-right:1px solid #f5f5f5;}
 .block_popular_stuff .content p {padding-bottom:0px; color:#383838; font-weight:bold; line-height:18px;}
 .block_popular_stuff .content p.date {margin-bottom:-5px; padding-top:9px; font-size:11px; color:#868686; font-weight:normal; line-height:normal;}
 .block_popular_stuff .content a {padding-bottom:0px; color:#383838; font-weight:bold;}

@@ -3,7 +3,7 @@
 <html>
 
 <head>
-<title>BusinessNews - Our Blog Style 1</title>
+<title>DjangoNews</title>
 
 <meta name="keywords" content="" />
 <meta name="description" content="" />
@@ -77,9 +77,13 @@
                         <div class="fr">
                         	<div class="block_top_menu">
                             	<ul>
+                                    {% if not request.user.is_authenticated %}
                                 	<li class="current"><a href="#login" class="open_popup">Login</a></li>
-                                    <li><a href="blog_register.html">Registration</a></li>
-                                    <li><a href="#">Subscribe</a></li>
+                                    <li><a href="{% url 'reg' %}">Registration</a></li>
+                                    {% else %}
+                                    <li class="current"><a>{{ request.user.username }}</a></li>
+                                    <li><a href="{% url 'logout' %}">Loginout</a></li>
+                                    {% endif %}
                                 </ul>
                             </div>
                             
@@ -111,10 +115,9 @@
                         <div class="fr">
                             <div class="block_languages"></div>
                             <div class="block_search_top">
-                            	<form action="#" />
-                                	<div class="field"><input type="text" class="w_def_text" title="Enter Your Email Addres" /></div>
+                            	<form action="{% url 'index' %}" />
+                                	<div class="field"><input type="text" class="w_def_text" placeholder="Search" name="keywords"/></div>
                                     <input type="submit" class="button" value="Search" />
-                                    
                                     <div class="clearboth"></div>
                                 </form>
                             </div>
@@ -128,13 +131,13 @@
                 	<div class="inner">
                     	<nav class="main_menu">
                         	<ul>
-								<li><a href="">Home</a></li>
-							  	<li><a href="#">Django</a></li>
-							  	<li><a href="#">Python</a></li>
-							  	<li><a href="#">CSS</a></li>
-                                <li><a href="#">DB</a></li>
-                                <li><a href="#">JS</a></li>
-                                <li><a href="#">Others</a></li>
+								<li><a href="/">Home</a></li>
+							  	<li><a href="{% url 'category' %}?category=1">Django</a></li>
+							  	<li><a href="{% url 'category' %}?category=2">Python</a></li>
+							  	<li><a href="{% url 'category' %}?category=3">CSS</a></li>
+                                <li><a href="{% url 'category' %}?category=4">DB</a></li>
+                                <li><a href="{% url 'category' %}?category=5">JS</a></li>
+                                <li><a href="{% url 'category' %}?category=6">Others</a></li>
 							  	<li><a href="#">About Us</a></li>
 						     </ul>
 						</nav>
@@ -155,45 +158,46 @@
                       <div class="separator" style="height:31px;"></div>
 
                         <div class="block_popular_posts">
-                        	<h4>Popular Posts</h4>
-
+                        	<h4>Popular Articles</h4>
+                            <div class="line_4" style="margin-bottom: 10px"></div>
+                            {% for article in article_click_list %}
                         	<div class="article">
 								<div class="text">
-									<p class="title"><a href="#">Packages and web page editors their default text.</a></p>
-									<div class="date"><p>11 July, 2012</p></div>
+									<p class="title"><a href="{% url 'article' %}?id={{ article.id }}">{{ article.title }}</a></p>
+									<div class="date"><p>{{ article.date_publish | date:'d-M-y' }}</p></div>
                                     <div class="icons">
                                     	<ul>
-                                        	<li><a href="#" class="views">41</a></li>
-                                            <li><a href="#" class="comments">22</a></li>
+                                        	<li><a href="#" class="views">{{ article.click_count }}</a></li>
+                                            <li><a href="#" class="comments">{{ article.comment_set.all.count }}</a></li>
                                         </ul>
                                     </div>
 								</div>
 							</div>
 							<div class="line_3"></div>
-							<div class="line_2"></div>
+                            {% endfor %}
                         </div>
 
                         <div class="separator" style="height:31px;"></div>
 
-                        <div class="block_popular_stuff">
-                        	<h4>Popular Video</h4>
+                        <div class="block_popular_posts">
+                        	<h4>Recommend</h4>
 
-                            <div class="content">
-                            	<a href="#" class="view_all">Show all video</a>
-                                <p><a href="#">Publishing packages and web page editors their default model.</a> <img src="../static/images/icon_video.gif" alt="" /></p>
-                                <p class="date">11 July, 2012</p>
-                            </div>
-
-                            <div class="info">
-                            	<ul>
-                                	<li class="comments"><a href="#">115</a></li>
-                                    <li class="views"><a href="#">220</a></li>
-                                </ul>
-                            </div>
-
-                            <div class="clearboth"></div>
-
-                            <div class="line_2"></div>
+                            <div class="line_4" style="margin-bottom: 10px"></div>
+                            {% for article in article_recommend_list %}
+                        	<div class="article">
+								<div class="text">
+									<p class="title"><a href="{% url 'article' %}?id={{ article.id }}">{{ article.title }}</a></p>
+									<div class="date"><p>{{ article.date_publish | date:'d-M-y' }}</p></div>
+                                    <div class="icons">
+                                    	<ul>
+                                        	<li><a href="#" class="views">{{ article.click_count }}</a></li>
+                                            <li><a href="#" class="comments">{{ article.comment_set.all.count }}</a></li>
+                                        </ul>
+                                    </div>
+								</div>
+							</div>
+							<div class="line_3"></div>
+                            {% endfor %}
                         </div>
 
                         <div class="separator" style="height:31px;"></div>
@@ -230,39 +234,27 @@
                         <div class="separator" style="height:31px;"></div>
 
                         <div class="block_popular_stuff">
-                        	<h4>Popular Photo</h4>
-
-                            <div class="content">
-                            	<a href="#" class="view_all">Show all photos</a>
-                            	<div class="media"><a href="../static/images/pic_pop_photo_big.jpg" class="general_pic_hover zoom no_fx" data-rel="prettyPhoto" title="Popular Photo"><img src="../static/images/pic_pop_photo.jpg" alt="" /></a></div>
-                                <p><a href="#">Editors their default model text, and a search for will uncover many.</a> <img src="../static/images/icon_photo.gif" alt="" /></p>
-                                <p class="date">11 July, 2012</p>
+                        	<h4>Friends</h4>
+                            <div class="content" style="margin-bottom: 20px">
+                                <div style="float: left;margin-right: 20px">
+                                    <a href="http://songzuwen.cc"><img style="width: 100px;height: 110px" src="../static/images/zuwen.png" alt="" /></a>
+                                    <p class="date">Girl Killer</p>
+                                </div>
+                                <div style="float: left;margin-right: 20px">
+                                    <a href="http://www.szlhpg.com/ShenZhen/"><img style="width: 100px;height: 110px" src="../static/images/zhouhuan.png" alt="" /></a>
+                                    <p class="date">Tree Monkey</p>
+                                </div>
+                                <div style="float: left;margin-right: 30px">
+                                    <a href="http://www.javaxxw.cn/"><img style="width: 100px;height: 110px" src="../static/images/tuyong.png" alt="" /></a>
+                                    <p class="date">JAVA Master</p>
+                                </div>
                             </div>
-
-                            <div class="info">
-                            	<ul>
-                                	<li class="comments"><a href="#">100</a></li>
-                                    <li class="views"><a href="#">134</a></li>
-                                </ul>
-                            </div>
-
                             <div class="clearboth"></div>
 
-                            <div class="line_2"></div>
                         </div>
 
                       	<div class="separator" style="height:31px;"></div>
 
-                        <div class="block_newsletter">
-                        	<h4>Newsletter</h4>
-
-                            <form action="#" />
-                            	<div class="field"><input type="text" class="w_def_text" title="Enter Your Email Addres" /></div>
-                                <input type="submit" class="button" value="Subscribe" />
-
-                                <div class="clearboth"></div>
-                            </form>
-                        </div>
 
                     </div>
                     <!-- sidebar END -->
@@ -282,15 +274,16 @@
             	<div class="title"><p>Enter the site</p></div>
 
                 <div class="form">
-                	<form action="#" />
+                	<form action="{% url 'login' %}" method="post" />
+                    {% csrf_token %}
                     	<div class="column">
-                        	<p class="label">Login</p>
-                            <div class="field"><input type="text" /></div>
+                        	<p class="label">Username</p>
+                            <div class="field"><input type="text" name="username" required/></div>
                         </div>
 
                         <div class="column">
                         	<p class="label">Password</p>
-                            <div class="field"><input type="password" /></div>
+                            <div class="field"><input type="password" name="password" required/></div>
                         </div>
 
 						<div class="column_2">
@@ -305,7 +298,7 @@
                         </div>
 
                         <div class="column button">
-                            <a href="#" class="enter"><span>Login</span></a>
+                           <input type="submit" class="enter" value="Login"/>
                         </div>
 
                         <div class="clearboth"></div>

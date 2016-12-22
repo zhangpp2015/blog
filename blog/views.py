@@ -41,19 +41,23 @@ def global_setting(request):
     #友情链接数据
     #文章排行榜数据
     #浏览排行
-    article_click_list = Article.objects.order_by('-click_count')
+    article_click_list = Article.objects.order_by('-click_count')[:3]
     #评论排行
     comment_count_list = Comment.objects.values('article').annotate(comment_count=Count('article')).order_by('-comment_count')
     article_comment_list = [Article.objects.get(pk=comment['article']) for comment in comment_count_list]
     #站长推荐
-    article_recommend_list = Article.objects.filter(is_recommend=True).order_by('-date_publish')
+    article_recommend_list = Article.objects.filter(is_recommend=True).order_by('-date_publish')[:3]
     return locals()
 
 
 def index(request):
     try:
-        #最新文章数据
-        article_list = getPage(request, Article.objects.all())
+        keywords = request.GET.get('keywords', '').strip()
+        # 最新文章数据
+        if keywords:
+            article_list = getPage(request, Article.objects.filter(title__icontains=keywords))
+        else:
+            article_list = getPage(request, Article.objects.all())
         #文章归档
         #1、先要去获取到文章中有的年份-月份
         #Article.objects.values('date_publish').distinct()
@@ -94,7 +98,7 @@ def category(request):
         category_name = Category.objects.get(id=category_id)
     except Exception as e:
         pass
-    return render(request, 'category.html', locals())
+    return render(request, 'blog_category.html', locals())
 
 
 #分页代码
@@ -140,7 +144,7 @@ def article(request):
 
     except Exception as e:
         print e
-    return render(request, 'article.html', locals())
+    return render(request, 'blog_article.html', locals())
 
 #提交评论
 def comment_post(request):
@@ -151,7 +155,6 @@ def comment_post(request):
             comment = Comment.objects.create(
                 username=comment_form.cleaned_data["author"],
                 email=comment_form.cleaned_data["email"],
-                url=comment_form.cleaned_data["url"],
                 content=comment_form.cleaned_data["comment"],
                 article_id=comment_form.cleaned_data["article"],
                 user=request.user if request.user.is_authenticated() else None
@@ -184,7 +187,7 @@ def do_login(request):
             login_form = LoginForm()
     except Exception as e:
         print e
-    return render(request, 'login.html', locals())
+    return redirect(request.META['HTTP_REFERER'])
 
 # 注销
 def do_logout(request):
@@ -199,7 +202,15 @@ def do_reg(request):
     try:
         if request.method == 'POST':
             reg_form = RegForm(request.POST)
+            user_list = User.objects.all()
+            username_list = []
+            for user in user_list:
+                username_list.append(user.username)
             if reg_form.is_valid():
+                if reg_form.cleaned_data["password"] != reg_form.cleaned_data["repassword"]:
+                    return render(request, 'failure.html', {'reason': '前后密码不一致！'})
+                if reg_form.cleaned_data["username"] in username_list:
+                    return render(request, 'failure.html', {'reason': '该用户名已存在！'})
                 # 注册
                 user = User.objects.create(username=reg_form.cleaned_data["username"],
                                     email=reg_form.cleaned_data["email"],
@@ -216,5 +227,5 @@ def do_reg(request):
         else:
             reg_form = RegForm()
     except Exception as e:
-        print e
-    return render(request, 'reg.html', locals())
+        return render(request, 'failure.html', {'reason': e})
+    return render(request, 'blog_register.html', locals())
