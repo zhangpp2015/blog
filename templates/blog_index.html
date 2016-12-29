@@ -31,8 +31,8 @@
                         </ul>
                     </div>
 
-                    <a href="#" class="views">{{ article.click_count }}</a>
-                    <a href="#" class="comments">{{ article.comment_set.all.count }}</a>
+                    <p class="views">{{ article.click_count }}</p>
+                    <a href="{% url 'article' %}?id={{ article.id }}#comment" class="comments" style="color: #719eae">{{ article.comment_set.all.count }}</a>
                 </div>
             </div>
 

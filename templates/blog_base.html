@@ -138,7 +138,7 @@
                                 <li><a href="{% url 'category' %}?category=4">DB</a></li>
                                 <li><a href="{% url 'category' %}?category=5">JS</a></li>
                                 <li><a href="{% url 'category' %}?category=6">Others</a></li>
-							  	<li><a href="#">About Us</a></li>
+							  	<li><a href="{% url 'about' %}">About Us</a></li>
 						     </ul>
 						</nav>
                     </div>
@@ -167,8 +167,8 @@
 									<div class="date"><p>{{ article.date_publish | date:'d-M-y' }}</p></div>
                                     <div class="icons">
                                     	<ul>
-                                        	<li><a href="#" class="views">{{ article.click_count }}</a></li>
-                                            <li><a href="#" class="comments">{{ article.comment_set.all.count }}</a></li>
+                                        	<li><a class="views">{{ article.click_count }}</a></li>
+                                            <li><a href="{% url 'article' %}?id={{ article.id }}#comment" class="comments" >{{ article.comment_set.all.count }}</a></li>
                                         </ul>
                                     </div>
 								</div>
@@ -190,8 +190,8 @@
 									<div class="date"><p>{{ article.date_publish | date:'d-M-y' }}</p></div>
                                     <div class="icons">
                                     	<ul>
-                                        	<li><a href="#" class="views">{{ article.click_count }}</a></li>
-                                            <li><a href="#" class="comments">{{ article.comment_set.all.count }}</a></li>
+                                        	<li><p class="views">{{ article.click_count }}</p></li>
+                                            <li><a href="{% url 'article' %}?id={{ article.id }}#comment" class="comments">{{ article.comment_set.all.count }}</a></li>
                                         </ul>
                                     </div>
 								</div>

@@ -229,3 +229,11 @@ def do_reg(request):
     except Exception as e:
         return render(request, 'failure.html', {'reason': e})
     return render(request, 'blog_register.html', locals())
+
+
+def about(request):
+    try:
+        pass
+    except Exception as e:
+        pass
+    return render(request, 'blog_about.html', locals())

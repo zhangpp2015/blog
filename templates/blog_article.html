@@ -44,13 +44,13 @@
 
     <div class="line_2" style="margin:5px 0px 28px;"></div>
 
-    <div class="block_comments">
+    <div class="block_comments" name="comment" id="comment">
         <h2>{{ comment_list|length }} Comments</h2>
         {% for comment in comment_list %}
         <div class="comment">
             <div class="content">
                 <p class="name">{{ comment.username }}</p>
-                <p class="info"><span class="date">{{ comment.date_publish | date:'d-M-y H:i:s' }}</span><a href="#" class="control">Reply</a></p>
+                <p class="info"><span class="date">{{ comment.date_publish | date:'d-M-y H:i:s' }}</span><a href="#" class="control"></a></p>
                 <p class="text">{{ comment.content }}</p>
             </div>
             <div class="clearboth"></div>
