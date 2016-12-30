@@ -1,7 +1,0 @@
-libraries:
-- name:"django"
-  version:"1.8"
-
-handles:
-- url: /static/
-  static_path: static
